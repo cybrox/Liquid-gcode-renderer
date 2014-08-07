@@ -14,9 +14,14 @@ var p = {
     u: null,
     a: true
   },
-  temp: {
+  temp: {   // temperature, used for UI
     bed: 0,
     noz: 0
+  },
+  lines: {  // line geometry arrays, used for toggle
+    fill: null,
+    move: null,
+    rapd: null
   },
   b: { // buffer
     x: 0,
@@ -62,9 +67,14 @@ var p = {
       fill: new THREE.Geometry(),
       rapd: new THREE.Geometry()
     }
-    var time = 0;
+    var time = 0,
+        step = 0;
     for(var i = 0; i < (p.b.lines.length - 1); i++){
-      time++;
+      if((step % 5000) == 0){
+        time++;
+        step = 0;
+      }
+      step++;
       gcview.rendering.total++;
       window.setTimeout(function(){ 
         gcview.rendering.current++;
@@ -93,9 +103,13 @@ var p = {
         geo[m].merge(o);
 
         if(gcview.rendering.current == gcview.rendering.total){
-          gcview.scene.add( new THREE.Line( geo.move, materials.move ) );
-          gcview.scene.add( new THREE.Line( geo.fill, materials.fill ) );
-          gcview.scene.add( new THREE.Line( geo.rapd, materials.rapd ) );
+          p.lines.move = new THREE.Line(geo.move, materials.move);
+          p.lines.fill = new THREE.Line(geo.fill, materials.fill);
+          p.lines.rapd = new THREE.Line(geo.rapd, materials.rapd);
+
+          gcview.scene.add( p.lines.move );
+          gcview.scene.add( p.lines.fill );
+          gcview.scene.add( p.lines.rapd );
         }
       }, time);
     }

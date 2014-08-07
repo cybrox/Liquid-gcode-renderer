@@ -7,6 +7,7 @@
 
 var gcparse = {
   time: 0,
+  step: 0,
   line: {
     curr: 0,
     tot: 0
@@ -33,7 +34,11 @@ var gcparse = {
     var handler = printer[comm] || printer['default'];
     for(var i = 1; i < parts.length; i++) args.push(parts[i]);
     
-    gcparse.time++;
+    if((gcparse.step % 5000) == 0){
+      gcparse.time++;
+      gcparse.step = 0;
+    }
+    gcparse.step++;
     gcparse.line.tot++;
     window.setTimeout(function(){
       var res = handler(args, comm);

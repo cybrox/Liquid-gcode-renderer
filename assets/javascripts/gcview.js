@@ -22,7 +22,12 @@
 
   rendering: {
     current: 0,
-    total: 0
+    total: 0,
+    show: {
+      fill: true,
+      move: true,
+      rapd: true
+    }
   },
 
   _init: function(){
@@ -81,5 +86,7 @@
   _updateUi: function(){
     $('#rcurr').text(gcview.rendering.current);
     $('#rtot').text(gcview.rendering.total);
+    $('#tempe').text(Math.round(parseInt(printer.temp.noz)));
+    $('#tempb').text(Math.round(parseInt(printer.temp.bed)));
   }
 }
