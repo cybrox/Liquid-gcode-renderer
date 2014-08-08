@@ -5,7 +5,7 @@
  * Setup, render and animate TREE scene for gcode rendering
  */
 
- var gcview = {
+var gcview = {
   root: $('#scene'),
   scene: new THREE.Scene(),
   render: new THREE.WebGLRenderer(),
@@ -22,12 +22,7 @@
 
   model: {
     lines: [],
-    layer: {},
-    render: {
-      fill: null,
-      move: null,
-      rapd: null,
-    }
+    layer: {}
   },
 
   _init: function(){
@@ -37,7 +32,7 @@
     gcview.camera.position.y = 0;
     gcview.camera.position.z = printer.size.z;
 
-    printer.drawOutlines(materials.mark);
+    printer.drawOutlines();
 
     gcview.buffer.camera.x = printer.size.x / 2;
     gcview.buffer.camera.y = printer.size.y / 2;
@@ -52,7 +47,7 @@
 
   _draw: function(){
     var linenum = gcview.model.lines.length,
-        buff = {x:0,y:0,z:0},
+        buff = {x:0,y:0,z:0,p:false,r:false},
         time = 0, // delay in ms
         zchg = 0; // changes on z value
 
@@ -65,25 +60,22 @@
 
         // select the right layer based on z-value
         if(line.z > buff.z) zchg++;
-        if(gcview.model.layer[zchg] == undefined) gcview.model.layer[zchg] = {};
+        if(gcview.model.layer[zchg] == undefined) gcview.model.layer[zchg] = new THREE.Geometry();
 
         // select print mode based on rapid/printing
         mode = 'move';
         if(line.p) mode = 'fill';
         if(line.r) mode = 'rapd';
 
-        // create line geometry
-        obj = new THREE.Geometry();
-        obj.vertices.push(
+        // push new vertices and colors to layer geometry
+        gcview.model.layer[zchg].colors.push(gclib.colors[mode]);
+        gcview.model.layer[zchg].colors.push(gclib.colors[mode]);
+        gcview.model.layer[zchg].vertices.push(
           new THREE.Vector3(buff.x, buff.y, buff.z),
           new THREE.Vector3(line.x, line.y, line.z)
         );
 
-        // push created line to store
-        if(gcview.model.layer[zchg][mode] == undefined) gcview.model.layer[zchg][mode] = obj;
-        else gcview.model.layer[zchg][mode].merge(obj);
-
-        // store line in buffer
+        // save line to buffer
         buff = line;
 
         // Display model
@@ -95,9 +87,7 @@
 
   _display: function(){
     $.each(gcview.model.layer, function(i, layer) {
-      $.each(layer, function(mode, lines) {
-        gcview.scene.add(new THREE.Line(lines, materials[mode]));
-      }); 
+      gcview.scene.add(new THREE.Line( layer, gclib.materials.plain, THREE.LinePieces ));
     }); 
   },
 

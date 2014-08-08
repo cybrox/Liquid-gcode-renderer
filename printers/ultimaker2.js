@@ -14,11 +14,6 @@ var p = {
     u: null,
     a: true
   },
-  lines: {  // line geometry arrays, used for toggle
-    fill: null,
-    move: null,
-    rapd: null
-  },
   b: { // buffer
     x: 0,
     y: 0,
@@ -29,7 +24,7 @@ var p = {
   },
   l: 0, // helper for rendering
 
-  drawOutlines: function(material){
+  drawOutlines: function(){
     var printer = new THREE.Geometry();
     printer.vertices.push(
       new THREE.Vector3( 000, 225, 205 ),
@@ -54,7 +49,7 @@ var p = {
       new THREE.Vector3( 000, 225, 000 )
     );
 
-    gcview.scene.add( new THREE.Line( printer, materials.mark ) );
+    gcview.scene.add( new THREE.Line( printer, gclib.materials.mark ) );
   },
 
   drawContent: function(){

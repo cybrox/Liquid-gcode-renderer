@@ -27,7 +27,7 @@ var gcparse = {
   },
 
   parseLine: function(line, num){
-    if(line.charAt(0) == ";" || line.length < 2) return;
+    if(line.charAt(0) == ";" || line.trim().length < 2) return;
     var parts = line.split(' ');
 
     var args = [];
