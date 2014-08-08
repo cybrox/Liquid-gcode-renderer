@@ -58,6 +58,10 @@ var p = {
   },
 
   drawContent: function(){
+    gcview.model.lines = p.b.lines;
+    gcview._draw();
+
+    /*
     var geo = {
       move: new THREE.Geometry(),
       fill: new THREE.Geometry(),
@@ -81,7 +85,7 @@ var p = {
           new THREE.Vector3(p.b.lines[p.l]['x'], p.b.lines[p.l]['y'], p.b.lines[p.l]['z'])
         );
         p.l++;
-        */
+        * /
 
         var a = p.b.lines[p.l];
         p.l++;
@@ -109,6 +113,7 @@ var p = {
         }
       }, time);
     }
+    */
   },
 
   default: function(args, comm){

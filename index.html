@@ -9,10 +9,10 @@
 <body>
 
   <div id="interface-1">
-    Analyzing Path <span id="lcurr">0</span> / <span id="ltot">?</span><br />
-    Rendering Path <span id="rcurr">0</span> / <span id="rtot">?</span><br />
-    Extruder temp. <span id="tempe">?</span>C<br />
-    Bed temp. <span id="tempb">?</span>C
+    Analyzing Path <span id="readpathcur">0</span> / <span id="readpathtot">?</span><br />
+    Rendering Path <span id="rendpathcur">0</span> / <span id="rendpathtot">?</span><br />
+    Extruder temp. <span id="tempextrude">?</span>C<br />
+    Bed temp. <span id="tempheatbed">?</span>C
   </div>
   <div id="interface-2">
     <input type="checkbox" class="ui-checkbox" id="ui-checkbox-fill" checked /> Display printed lines<br />
@@ -37,7 +37,7 @@
 
       var printer = printerultimaker2;
       
-      $.get('gcode/test.gcode', function(payload){
+      $.get('gcode/test2.gcode', function(payload){
         gcview._init();
         gcparse._parse(payload);
       });
