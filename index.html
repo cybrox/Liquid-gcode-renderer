@@ -33,7 +33,7 @@
 
 
       var printer = printerultimaker2;
-      var model = 'annie';
+      var model = window.location.hash.substr(1);
 
       $('#overlay')
         .text('Loading model: '+model)
