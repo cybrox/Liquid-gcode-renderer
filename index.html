@@ -23,7 +23,7 @@
 
   <script type="text/javascript" src="assets/vendor/jquery.min.js"></script>
   <script type="text/javascript" src="assets/vendor/three.min.js"></script>
-  <script type="text/javascript" src="assets/vendor/three.tb.js"></script>
+  <script type="text/javascript" src="assets/vendor/three-orbitcontrols.js"></script>
   <script type="text/javascript" src="assets/javascripts/event.js"></script>
   <script type="text/javascript" src="assets/javascripts/user.js"></script>
   <script type="text/javascript" src="assets/javascripts/library.js"></script>
@@ -37,7 +37,7 @@
 
       var printer = printerultimaker2;
       
-      $.get('gcode/programmer.gcode', function(payload){
+      $.get('gcode/test.gcode', function(payload){
         gcview._init();
         gcparse._parse(payload);
       });
