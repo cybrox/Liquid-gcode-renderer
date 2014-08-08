@@ -8,6 +8,7 @@
 </head>
 <body>
 
+  <div id="overlay"></div>
   <div id="interface">
     Analyzing Path <span id="readpathcur">0</span> / <span id="readpathtot">?</span><br />
     Rendering Path <span id="rendpathcur">0</span> / <span id="rendpathtot">?</span><br />
@@ -32,8 +33,15 @@
 
 
       var printer = printerultimaker2;
-      
-      $.get('gcode/programmer.gcode', function(payload){
+      var model = 'skullglass';
+
+      $('#overlay')
+        .text('Loading model: '+model)
+        .css('line-height', window.innerHeight+'px');
+
+      $.get('gcode/'+model+'.gcode', function(payload){
+        $('#overlay').hide();
+        $('#interface').show();
         gcview._init();
         gcparse._parse(payload);
       });
