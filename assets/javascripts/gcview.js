@@ -22,14 +22,15 @@ var gcview = {
 
   model: {
     lines: [],
-    layer: {}
+    layer: {},
+    rendered: {}
   },
 
   _init: function(){
     gcview.render.setSize(user.sizex, user.sizey);
     gcview.root.append(gcview.render.domElement);
     gcview.camera.position.x = printer.size.x / 2;
-    gcview.camera.position.y = 0;
+    gcview.camera.position.y = -printer.size.y / 2;
     gcview.camera.position.z = printer.size.z;
 
     printer.drawOutlines();
@@ -80,14 +81,29 @@ var gcview = {
 
         // Display model
         user._update();
-        if(user.ui.val.rendpathcur == user.ui.val.rendpathtot) gcview._display();
+        if(user.ui.val.rendpathcur == user.ui.val.rendpathtot){
+          user.ui.val.fltlayermax = zchg;
+          user._update();
+          gcview._display();
+        }
       }, time);
     }
   },
 
+  /**
+   * Render specific layers
+   */
+  renderLayers: function(min, max){
+    $.each(gcview.model.layer, function(i, layer) {
+      if(i >= min && i <= max) gcview.scene.add(gcview.model.rendered[i]);
+      else gcview.scene.remove(gcview.model.rendered[i]);
+    }); 
+  },
+
   _display: function(){
     $.each(gcview.model.layer, function(i, layer) {
-      gcview.scene.add(new THREE.Line( layer, gclib.materials.plain, THREE.LinePieces ));
+      gcview.model.rendered[i] = new THREE.Line( layer, gclib.materials.plain, THREE.LinePieces );
+      gcview.scene.add(gcview.model.rendered[i]);
     }); 
   },
 

@@ -5,7 +5,7 @@
  * Handle user interactions and display
  */
 
- var user = {
+var user = {
   sizex: window.innerWidth,
   sizey: window.innerHeight,
 
@@ -16,7 +16,9 @@
       rendpathcur: $('#rendpathcur'),
       rendpathtot: $('#rendpathtot'),
       tempextrude: $('#tempextrude'),
-      tempheatbed: $('#tempheatbed')
+      tempheatbed: $('#tempheatbed'),
+      fltlayermin: $('#fltlayermin'),
+      fltlayermax: $('#fltlayermax')
     },
     val: {
       readpathcur: 0,
@@ -24,13 +26,34 @@
       rendpathcur: 0,
       rendpathtot: 0,
       tempextrude: 0,
-      tempheatbed: 0
+      tempheatbed: 0,
+      fltlayermin: 0,
+      fltlayermax: 0
     },
-    filter: {
-      fill: true,
-      move: true,
-      rapd: true
+    cache: {
+      fltlayermin: undefined,
+      fltlayermax: undefined
     }
+  },
+
+  changeLayer: function(layer, value){
+    if(user.ui.cache.fltlayermax == undefined){
+      user.ui.cache.fltlayermin = user.ui.val.fltlayermin;
+      user.ui.cache.fltlayermax = user.ui.val.fltlayermax;
+    }
+    user.ui.val[layer] += value;
+    if(user.ui.val[layer] < 0 || user.ui.val[layer] > user.ui.cache.fltlayermax || user.ui.val.fltlayermin > user.ui.val.fltlayermax){
+      user.ui.val[layer] -= value;
+    }
+    gcview.renderLayers(user.ui.val.fltlayermin, user.ui.val.fltlayermax);
+    user._update();
+  },
+
+  resetLayer: function(){
+    user.ui.val.fltlayermin = user.ui.cache.fltlayermin;
+    user.ui.val.fltlayermax = user.ui.cache.fltlayermax;
+    gcview.renderLayers(user.ui.val.fltlayermin, user.ui.val.fltlayermax);
+    user._update();
   },
 
   /**

@@ -5,24 +5,16 @@ body {
   padding: 0px;
 }
 
-#interface-1,
-#interface-2 {
+#interface {
   position: absolute;
   width: auto;
   height: auto;
   z-index: 500;
   color: white;
-}
-
-#interface-1 {
   left: 10px;
   top: 10px;
 }
 
-#interface-2 {
-  left: 10px;
-  bottom: 10px;
-}
 
 #scene {
   position: absolute;

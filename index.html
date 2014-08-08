@@ -3,21 +3,17 @@
 
   <link rel="stylesheet" href="assets/stylesheets/application.css" />
 
-  <title>gcview</title>
+  <title>Liquid: Gcode Renderer</title>
 
 </head>
 <body>
 
-  <div id="interface-1">
+  <div id="interface">
     Analyzing Path <span id="readpathcur">0</span> / <span id="readpathtot">?</span><br />
     Rendering Path <span id="rendpathcur">0</span> / <span id="rendpathtot">?</span><br />
     Extruder temp. <span id="tempextrude">?</span>C<br />
-    Bed temp. <span id="tempheatbed">?</span>C
-  </div>
-  <div id="interface-2">
-    <input type="checkbox" class="ui-checkbox" id="ui-checkbox-fill" checked /> Display printed lines<br />
-    <input type="checkbox" class="ui-checkbox" id="ui-checkbox-rapd" checked /> Display printing movements<br />
-    <input type="checkbox" class="ui-checkbox" id="ui-checkbox-move" checked /> Display non-printing movements<br />
+    Bed temp. <span id="tempheatbed">?</span>C<br />
+    Layer <span id="fltlayermin">?</span> - <span id="fltlayermax">?</span>
   </div>
   <div id="scene"></div>
 
@@ -37,7 +33,7 @@
 
       var printer = printerultimaker2;
       
-      $.get('gcode/skullglass.gcode', function(payload){
+      $.get('gcode/programmer.gcode', function(payload){
         gcview._init();
         gcparse._parse(payload);
       });
