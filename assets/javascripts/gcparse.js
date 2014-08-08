@@ -21,8 +21,9 @@ var gcparse = {
   },
 
   _updateUi: function(){
-    $('#lcurr').text(gcparse.line.curr);
-    $('#ltot').text(gcparse.line.tot);
+    user.ui.val.readpathcur = gcparse.line.curr;
+    user.ui.val.readpathtot = gcparse.line.tot;
+    user._update();
   },
 
   parseLine: function(line, num){

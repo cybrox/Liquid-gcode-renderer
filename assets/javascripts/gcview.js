@@ -20,16 +20,6 @@
     }
   },
 
-  rendering: {
-    current: 0,
-    total: 0,
-    show: {
-      fill: true,
-      move: true,
-      rapd: true
-    }
-  },
-
   _init: function(){
     gcview.render.setSize(user.sizex, user.sizey);
     gcview.root.append(gcview.render.domElement);
@@ -47,6 +37,7 @@
     gcview.control.target = new THREE.Vector3(gcview.buffer.camera.x, gcview.buffer.camera.y, gcview.buffer.camera.z);
 
     gcview._animate();
+    user._update();
   },
 
   _draw: function(lines){
@@ -60,12 +51,6 @@
     requestAnimationFrame(function(){ gcview._animate(); });
   },
 
-  move: function(direction, steps){
-    gcview.camera.position[direction] += steps;
-    gcview.buffer.camera[direction] += steps;
-    gcview.update();
-  },
-
   reset: function(){
     gcview.camera.position.x = printer.size.x / 2;
     gcview.camera.position.y = 0;
@@ -74,17 +59,6 @@
     gcview.buffer.camera.y = printer.size.y / 2;
     gcview.buffer.camera.z = printer.size.z / 2;
     gcview.control.reset();
-    gcview.update();
-  },
-
-  update: function(){
     gcview.control.target = new THREE.Vector3(gcview.buffer.camera.x, gcview.buffer.camera.y, gcview.buffer.camera.z);
   },
-
-  _updateUi: function(){
-    $('#rcurr').text(gcview.rendering.current);
-    $('#rtot').text(gcview.rendering.total);
-    $('#tempe').text(Math.round(parseInt(printer.temp.noz)));
-    $('#tempb').text(Math.round(parseInt(printer.temp.bed)));
-  }
 }

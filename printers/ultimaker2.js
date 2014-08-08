@@ -14,10 +14,6 @@ var p = {
     u: null,
     a: true
   },
-  temp: {   // temperature, used for UI
-    bed: 0,
-    noz: 0
-  },
   lines: {  // line geometry arrays, used for toggle
     fill: null,
     move: null,
@@ -75,10 +71,10 @@ var p = {
         step = 0;
       }
       step++;
-      gcview.rendering.total++;
+      user.ui.val.rendpathtot++;
       window.setTimeout(function(){ 
-        gcview.rendering.current++;
-        gcview._updateUi();
+        user.ui.val.rendpathcur++;
+        user._update();
 
         /*
         object.vertices.push(
@@ -102,7 +98,7 @@ var p = {
 
         geo[m].merge(o);
 
-        if(gcview.rendering.current == gcview.rendering.total){
+        if(user.ui.val.rendpathcur == user.ui.val.rendpathtot){
           p.lines.move = new THREE.Line(geo.move, materials.move);
           p.lines.fill = new THREE.Line(geo.fill, materials.fill);
           p.lines.rapd = new THREE.Line(geo.rapd, materials.rapd);
@@ -172,7 +168,7 @@ var p = {
   /* M109 - Set extruder temperature and wait */
   M109: function(args){
     if(args.length != 2) return false;
-    p.temp.noz = (args[1]).replace('S', '');
+    user.ui.val.tempextrude = (args[1]).replace('S', '');
     return true;
   },
 
@@ -183,7 +179,7 @@ var p = {
   /* M140 - Bed temperature (fast) */
   M140: function(args){
     if(args.length != 1) return false;
-    p.temp.bed = (args[0]).replace('S', '');
+    user.ui.val.tempheatbed = (args[0]).replace('S', '');
     return true;
   },
 
