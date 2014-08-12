@@ -9,7 +9,7 @@ Eventually, Liquid should display a camera view of the current print as well as 
 `right mouse` Drag camera
 `r` Reset camera  
 `q` Minimum Layer +1  
-`a` Minumum Layer -1  
+`a` Minimum Layer -1  
 `w` Maximum Layer +1  
 `s` Maximum Layer -1  
 `e` Reset Layer  
